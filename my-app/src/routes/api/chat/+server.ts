@@ -10,7 +10,38 @@ const openai = new OpenAI({
     apiKey: process.env.VITE_OPENAI_API_KEY
 })
 
-console.log(openai.beta.assistants);
+const assistant = await openai.beta.assistants.retrieve('asst_QDy91efj4hCrNCxOvAuejzuy')
+
+const thread = await openai.beta.threads.create()
+
+const message = await openai.beta.threads.messages.create(thread.id, {
+    role: "user",
+    content: "What skills does antonio have in term of coding?",
+})
+
+const run = await openai.beta.threads.runs.create(thread.id, {
+    assistant_id: assistant.id,
+    instructions: "Please provide the answer in a polite way.",
+
+})
+
+let retreive = await openai.beta.threads.runs.retrieve(thread.id, run.id)
+
+while (retreive.status !== 'completed') {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    console.log('Loading response...');
+
+    retreive = await openai.beta.threads.runs.retrieve(thread.id, run.id);
+
+}
+
+
+const messages = await openai.beta.threads.messages.list(thread.id)
+
+const lastMessageOfRun = messages.data.filter(message => message.role === 'assistant').pop()
+
+console.log(lastMessageOfRun.content);
+
 
 export const POST: RequestHandler = async ({ request }) => {
     try {
