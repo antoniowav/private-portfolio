@@ -53,7 +53,7 @@
 				</p>
 			</div>
 
-			<img class="picture" src="./icons/portfolio-picture.jpg" alt="toni." />
+			<img class="picture" src="src/icons/portfolio-picture.jpg" alt="toni." />
 		</section>
 		<section id="about" class="section">
 			<div class="typewriter">

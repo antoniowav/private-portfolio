@@ -167,6 +167,7 @@
 		}
 
 		.menu-toggle {
+			color: white;
 			display: block;
 		}
 
