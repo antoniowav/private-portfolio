@@ -1,4 +1,9 @@
-<h1>
-	since i am not a company, i figured there was no need for a contact form, so if you want to get in
-	touch,
-</h1>
+<p>i am not a company so i figured, if you want to get in touch,</p>
+
+<style>
+	p {
+		font-size: 1.2rem;
+		line-height: 1.5rem;
+		font-weight: 400;
+	}
+</style>

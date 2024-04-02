@@ -2,26 +2,22 @@
 	import { onMount } from 'svelte';
 	import ChatWidget from './ChatWidget.svelte';
 	import RollingList from './RollingList.svelte';
-	import { slide } from 'svelte/transition';
 	import Contact from './Contact.svelte';
 	import Projects from './Projects.svelte';
 
 	let currentSection = '';
-	let showRollingList = false;
 
 	let text =
-		"Hello! I'm Toni, a web developer from Florence now in Gothenburg, Sweden. My journey has taken me from the beauty of Italy to the tech world of Sweden, where I've honed my skills in Next.js, TypeScript, and front-end development. Outside of coding, I have a passion for photography, music, and Formula 1. I'm always on the lookout for new challenges and opportunities to grow in the field of web/app development.";
+		"hello! i'm toni, a web developer from florence now in gothenburg, sweden. My journey has taken me from the beauty of Italy to the tech world of Sweden, where I've honed my skills in Next.js, TypeScript, and front-end development. Outside of coding, I have a passion for photography, music, and Formula 1. I'm always on the lookout for new challenges and opportunities to grow in the field of web/app development.";
 	let displayText = '';
 	let index = 0;
-	const speed = 35;
+	const speed = 15;
 
 	function typeWriter() {
 		if (index < text.length) {
 			displayText += text.charAt(index);
 			index++;
 			setTimeout(typeWriter, speed);
-		} else {
-			showRollingList = true;
 		}
 	}
 
@@ -44,27 +40,29 @@
 <main class="main">
 	<div class="sections-container">
 		<section id="home" class="section">
-			<h1>
-				hi, i'm toni. <span class="wave">👋</span><br /><br />
-				i make websites, api integrations, <br /> and love to explore new technologies.<br /><br />
-				i'm currently learning
-				<a class="link" target="_blank" href="https://svelte.dev/">svelte</a>.<br />
-				but i also have experimented with some ai integration <br /> for my portfolio site.<br /><br
-				/>
-				try it by clicking <a class="link" href="#chat">here</a>.<br />
-			</h1>
+			<div class="content">
+				<h1>hi, i'm toni. <span class="wave">👋</span></h1>
+				<p>
+					i make websites, api integrations, <br /> and love to explore new technologies.<br /><br
+					/>
+					i'm currently learning
+					<a class="link" target="_blank" href="https://svelte.dev/">svelte</a>.<br />
+					but i also have experimented <br /> with some ai integration <br /> for my portfolio site.<br
+					/><br />
+					try it by clicking <a class="link" href="#chat">here</a>.<br />
+				</p>
+			</div>
+
 			<img class="picture" src="../src/icons/portfolio-picture.jpg" alt="toni." />
 		</section>
 		<section id="about" class="section">
 			<div class="typewriter">
-				{displayText}
-				{#if showRollingList}
-					<hr class="separator" in:slide={{ duration: 300 }} />
-					<div in:slide={{ duration: 300 }}>
-						<RollingList />
-					</div>
-				{/if}
+				<h1>about me.</h1>
+				<p>
+					{displayText}
+				</p>
 			</div>
+			<RollingList />
 		</section>
 		<section id="projects" class="section">
 			<Projects />
@@ -103,8 +101,14 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		gap: 1rem;
+		gap: 10rem;
 		overflow: hidden;
+	}
+	.content {
+		height: 400px;
+	}
+	#about {
+		flex-direction: column;
 	}
 	#contacts {
 		flex-direction: column;
@@ -114,36 +118,46 @@
 			margin-top: 0;
 		}
 	}
-
-	.separator {
-		margin: 2rem 0;
-		border: 1px solid #ccc;
-	}
 	.section h1 {
 		font-size: 3rem;
-		line-height: 3rem;
+		line-height: 4rem;
+		font-weight: 400;
+		margin: 0;
+	}
+	.section p {
+		font-size: 1.2rem;
+		line-height: 1.5rem;
+		font-weight: 400;
 	}
 	.picture {
-		width: 600px;
-		height: 600px;
-		border-radius: 50%;
+		width: 400px;
+		height: 400px;
+		border-radius: 0.8rem;
 		object-fit: cover;
 		object-position: center;
+		filter: grayscale(100%);
+		transition: filter 0.6s ease-in-out;
+	}
+	.picture:hover {
+		filter: grayscale(0%);
 	}
 	.typewriter {
-		font-family: monospace;
-		white-space: pre-wrap;
 		word-wrap: break-word;
-		width: 100%;
+		width: 50%;
+		font-size: 1.2rem;
+		line-height: 1.5rem;
+		font-weight: 400;
+		text-transform: lowercase;
 	}
 	.email-me {
 		position: relative;
 		text-decoration: none;
-		color: white;
+		color: #ff94bb;
 		overflow: hidden;
 		display: inline-block;
-		transition: all 0.3s ease;
+		transition: all 0.6s ease;
 		text-align: start;
+		border-bottom: rgba(255, 255, 255, 0.439) 2px solid;
 	}
 
 	.email-me::after {
@@ -153,7 +167,7 @@
 		left: 0;
 		width: 100%;
 		height: 2px;
-		background-color: rgb(208, 173, 240);
+		background-color: #cc6b8e;
 		transform: translateX(-100%);
 		transition: transform 0.3s ease;
 	}
@@ -163,8 +177,9 @@
 	}
 
 	.email-me:hover {
-		color: rgb(208, 173, 240);
+		color: #cc6b8e;
 		cursor: pointer;
+		border-bottom: rgba(255, 255, 255, 0) 2px solid;
 	}
 	@media (max-width: 1280px) {
 		.section {
@@ -175,18 +190,49 @@
 		}
 
 		.section h1 {
-			font-size: 20px;
+			margin-top: 3rem;
+		}
+
+		.section a::after {
+			display: none;
+		}
+
+		#contacts {
+			align-items: unset;
 		}
 
 		#contacts h1 {
 			font-size: 40px;
 		}
+		#home {
+			gap: 0;
+		}
+		.typewriter {
+			width: 100%;
+		}
 		.picture {
-			width: 200px;
+			width: 400px;
+			height: 400px;
+		}
+	}
+
+	@media (max-width: 400px) {
+		.picture {
+			width: 400px;
 			height: 200px;
 		}
-		.email-me {
-			left: -3rem;
+		.main {
+			height: 60vh;
+		}
+
+		.section h1 {
+			font-size: 1.7rem;
+			margin: 1rem 0;
+			line-height: normal;
+		}
+
+		.section p {
+			font-size: 1rem;
 		}
 	}
 </style>
