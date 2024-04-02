@@ -53,7 +53,11 @@
 				</p>
 			</div>
 
-			<img class="picture" src="src/icons/portfolio-picture.jpg" alt="toni." />
+			<img
+				class="picture"
+				src="https://res.cloudinary.com/dcps0uryp/image/upload/v1712094497/seb66m4yzat4zfims9hy.jpg"
+				alt="toni."
+			/>
 		</section>
 		<section id="about" class="section">
 			<div class="typewriter">
