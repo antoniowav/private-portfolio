@@ -27,7 +27,7 @@
 <style>
 	footer {
 		padding: 2rem;
-		color: white;
+		color: #cc6b8e;
 		display: flex;
 		align-items: center;
 	}
@@ -51,7 +51,7 @@
 
 	.social-link {
 		text-decoration: none;
-		color: white;
+		color: #cc6b8e;
 		font-size: 1.2rem;
 		position: relative;
 		transition: color 0.3s ease;
@@ -62,7 +62,7 @@
 		position: absolute;
 		width: 100%;
 		height: 2px;
-		background: white;
+		background: #ff94bb;
 		left: 0;
 		bottom: -3px;
 		transform: scaleX(0);
@@ -76,7 +76,7 @@
 	}
 
 	.social-link:hover {
-		color: rgb(208, 173, 240);
+		color: #ff94bb;
 	}
 
 	@keyframes pulse {

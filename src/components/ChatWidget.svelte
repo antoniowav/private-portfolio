@@ -6,6 +6,7 @@
 	let conversation: { text: string; type: 'sent' | 'reply'; id: number }[] = [];
 	let chatArea: HTMLDivElement;
 	let smoothScroll = false;
+	let isLoading = false;
 
 	const suggestions = [
 		'What technologies do you specialize in?',
@@ -64,6 +65,9 @@
 			scrollToBottom(true);
 		}, 10);
 
+		isLoading = true;
+		console.log('fetching', isLoading);
+
 		try {
 			const response = await fetch('/api/chat', {
 				method: 'POST',
@@ -76,6 +80,7 @@
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
+			isLoading = false;
 
 			const data = await response.json();
 			responseText = data.response[0].text.value;
@@ -91,6 +96,7 @@
 				scrollToBottom(true);
 			}, 10);
 		} catch (error) {
+			isLoading = false;
 			console.error('Error fetching:', error);
 			responseText = "Sorry, couldn't fetch the response.";
 		}
@@ -117,7 +123,7 @@
 <section id="chat" class="chat-interface">
 	<div class="chat-area" bind:this={chatArea}>
 		{#if conversation.length === 0}
-			<div class="placeholder">Start a conversation!</div>
+			<div class="placeholder">Welcome to my personal chatbot. <br /> Ask me anything.</div>
 		{/if}
 		{#each conversation as message (message.id)}
 			<div class="message {message.type}">
@@ -125,6 +131,13 @@
 			</div>
 		{/each}
 	</div>
+	{#if isLoading}
+		<div class="loading-dots">
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	{/if}
 	<div class="input-and-suggestions">
 		<div class="suggestions">
 			<button on:click={fillInputWithRandomQuestion}>Random Question</button>
@@ -145,12 +158,19 @@
 	.chat-interface {
 		width: 100%;
 		max-width: 600px;
-		height: 900px;
+		height: 90%;
 		margin: 20px auto;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
+		border-radius: 0.8rem;
+		border: 2px solid #25302f68;
+		padding: 1rem;
+
+		& a {
+			color: inherit;
+			text-decoration: underline;
+		}
 	}
 
 	.chat-area {
@@ -168,6 +188,8 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		text-transform: lowercase;
+		text-align: center;
 	}
 
 	.input-and-suggestions {
@@ -186,33 +208,44 @@
 
 	.message {
 		padding: 10px;
-		border-radius: 20px;
+		border-radius: 0.8rem;
 		margin: 5px;
 		word-break: break-word;
 		max-width: 80%;
 		align-self: flex-end;
-		background-color: #007bff;
+		background-color: white;
+		color: black;
 	}
 
 	.message.reply {
 		align-self: flex-start;
-		background-color: rgb(123, 123, 123);
+		background-color: rgba(255, 255, 255, 0.7);
 	}
 	input[type='text'] {
 		flex-grow: 1;
-		padding: 10px;
-		border: 1px solid #ccc;
-		border-radius: 20px;
+		outline: none;
+		padding: 1rem;
+		border: 2px solid #ccc;
+		border-radius: 0.8rem;
 		margin-right: 10px;
+	}
+
+	input[type='text']:focus {
+		border: #ff94bb solid 2px;
 	}
 
 	.send-button {
 		padding: 10px 15px;
-		border-radius: 20px;
-		background-color: #007bff;
+		border-radius: 0.8rem;
+		background-color: #ff94bb;
 		color: white;
 		border: none;
 		cursor: pointer;
+		transition: all 0.2s ease-in-out;
+	}
+
+	.send-button:hover {
+		background-color: #cc6b8e;
 	}
 
 	.suggestions {
@@ -225,14 +258,56 @@
 	.suggestions button {
 		padding: 10px 10px;
 		width: fit-content;
-		border-radius: 20px;
+		border-radius: 0.8rem;
 		cursor: pointer;
-		background-color: #064e9a;
+		background-color: #ff94bb;
 		color: white;
-		border: white 1px solid;
+		border: none;
+		transition: all 0.2s ease-in-out;
 	}
 
 	.suggestions button:hover {
-		background-color: rgb(90, 90, 90);
+		background-color: #cc6b8e;
+	}
+
+	.loading-dots {
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		height: 40px;
+	}
+
+	.loading-dots div {
+		width: 8px;
+		height: 8px;
+		background-color: #ff94bb;
+		border-radius: 50%;
+		margin: 0 3px;
+		animation: bounce 0.6s infinite alternate;
+	}
+
+	@keyframes bounce {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(-15px);
+		}
+	}
+
+	.loading-dots div:nth-child(2) {
+		animation-delay: 0.2s;
+	}
+
+	.loading-dots div:nth-child(3) {
+		animation-delay: 0.4s;
+	}
+
+	@media (max-width: 768px) {
+		.chat-interface {
+			width: unset;
+			max-width: 340px;
+			padding: 0;
+		}
 	}
 </style>

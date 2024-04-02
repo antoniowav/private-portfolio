@@ -86,13 +86,19 @@
 	.rolling-list {
 		overflow: hidden;
 		white-space: nowrap;
-		position: relative;
+		position: fixed;
+
+		left: 0;
+		right: 0;
+		bottom: 0;
+		padding: 1rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-direction: row;
 		gap: 1rem;
 		margin: 0 -2rem;
+		background-color: #25302f68;
 	}
 
 	.rolling-list:before,
@@ -124,7 +130,7 @@
 	.item {
 		gap: 1rem;
 		display: flex;
-		color: white;
+		color: #ff94bb;
 		animation: 50s slide infinite linear;
 	}
 </style>
