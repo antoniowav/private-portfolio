@@ -92,11 +92,12 @@
 		justify-content: space-between;
 		position: relative;
 		z-index: 1;
+		height: fit-content;
 	}
 
 	.logo {
 		text-decoration: none;
-		color: white;
+		color: #ff94bb;
 	}
 
 	.menu-toggle {
@@ -116,11 +117,10 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		align-items: center;
-		gap: 1rem;
-		background-color: #f5f5f5;
-		padding: 0 2rem;
-		border-radius: 3rem;
+		gap: 0.2rem;
+		background-color: rgba(255, 255, 255, 0.7);
+		padding: 0.2rem 0.2rem;
+		border-radius: 0.8rem;
 		transition:
 			transform 0.4s ease,
 			opacity 0.4s ease;
@@ -133,27 +133,17 @@
 	.header-links a {
 		text-decoration: none;
 		color: black;
-		position: relative;
-		padding: 10px 20px;
-		border-radius: 40px;
+		padding: 0.8rem;
+		border-radius: 0.8rem;
 		transition: background-color 0.3s;
-	}
-
-	.header-links a::after {
-		content: '';
-		position: absolute;
-		height: 5px;
-		width: 5px;
-		background-color: red;
-		border-radius: 50%;
-		right: -10px;
-		top: 50%;
-		transform: translateY(-50%);
-		visibility: hidden;
+		align-content: center;
+		width: 5rem;
+		letter-spacing: 0.06rem;
+		font-weight: 700;
 	}
 
 	.header-links a:hover {
-		background-color: #aaa;
+		background-color: white;
 		visibility: visible;
 	}
 
@@ -162,7 +152,7 @@
 	}
 
 	.header-links a.active {
-		background-color: #aaa;
+		background-color: white;
 	}
 
 	.header-links a.active::after {
@@ -188,11 +178,12 @@
 			height: 100vh;
 			flex-direction: column;
 			justify-content: center;
-			background-color: rgba(0, 0, 0, 0.99);
+			background-color: rgba(255, 255, 255, 0.76);
 			padding: 0;
 			gap: 1rem;
 			z-index: 1;
 			border-radius: 0;
+			align-items: center;
 			display: flex;
 			transform: translateY(-100%);
 			opacity: 0;
@@ -203,7 +194,7 @@
 			opacity: 1;
 		}
 		.header-links a {
-			color: white;
+			color: black;
 			font-size: 1.5rem;
 		}
 	}
