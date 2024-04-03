@@ -134,13 +134,14 @@
 		font-weight: 400;
 	}
 	.picture {
-		width: 400px;
-		height: 400px;
-		border-radius: 0.8rem;
-		object-fit: cover;
-		object-position: center;
+		width: 50vw; /* Adjusted for responsiveness */
+		height: auto; /* Maintain aspect ratio */
+		max-width: 400px; /* Optional: to prevent the image from becoming too large on big screens */
+		max-height: 400px;
 		filter: grayscale(100%);
-		transition: filter 0.6s ease-in-out;
+		transition: filter 0.5s ease-in-out;
+		object-fit: cover;
+		border-radius: 0.8rem;
 	}
 	.picture:hover {
 		filter: grayscale(0%);
@@ -220,23 +221,48 @@
 		}
 	}
 
-	@media (max-width: 400px) {
-		.picture {
-			width: 400px;
-			height: 200px;
-		}
-		.main {
-			height: 60vh;
-		}
-
+	@media (max-width: 768px) {
 		.section h1 {
-			font-size: 1.7rem;
-			margin: 1rem 0;
-			line-height: normal;
+			font-size: 2.5rem;
 		}
-
 		.section p {
 			font-size: 1rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.section h1 {
+			font-size: 2rem;
+		}
+		.section p {
+			font-size: 0.9rem;
+		}
+		.picture {
+			width: 80vw;
+			max-width: 300px;
+		}
+		.content h1 {
+			margin-top: 1rem;
+		}
+		.main {
+			height: 66vh;
+		}
+	}
+
+	@media (max-width: 400px) {
+		.content h1 {
+			margin-top: 0;
+		}
+		.section h1 {
+			font-size: 1.5rem;
+		}
+		.section p,
+		.typewriter {
+			font-size: 0.9rem;
+		}
+		.picture {
+			width: 80vw;
+			height: 25vh;
 		}
 	}
 </style>

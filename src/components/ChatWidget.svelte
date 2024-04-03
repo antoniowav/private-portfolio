@@ -19,7 +19,6 @@
 		'Can you explain your development process?',
 		'What’s the most challenging project you’ve ever worked on?',
 		'How do you stay updated with the latest web development trends?',
-		'Do you have experience with mobile app development?',
 		'What tools do you use for project management?',
 		'How do you approach debugging tough issues?',
 		'Can you share a piece of code you are particularly proud of?',
@@ -66,7 +65,6 @@
 		}, 10);
 
 		isLoading = true;
-		console.log('fetching', isLoading);
 
 		try {
 			const response = await fetch('/api/chat', {
@@ -88,7 +86,8 @@
 				/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi,
 				'<a href="mailto:$1">$1</a>'
 			);
-			responseText = responseText.replace(/【\d+†[^\】]+】/g, '');
+			const pattern: RegExp = /【\d+†source】/g;
+			responseText = responseText.replace(pattern, '');
 			conversation = [...conversation, { text: responseText, type: 'reply', id: Date.now() }];
 			await tick();
 			setTimeout(async () => {
@@ -123,7 +122,12 @@
 <section id="chat" class="chat-interface">
 	<div class="chat-area" bind:this={chatArea}>
 		{#if conversation.length === 0}
-			<div class="placeholder">Welcome to my personal chatbot. <br /> Ask me anything.</div>
+			<div class="placeholder">
+				Welcome to my personal chatbot. <br /> it is based on the open ai assistant api and trained
+				with information about me. <br /> you can ask questions and it will always reply as if it
+				was me.
+				<br />Ask me anything.
+			</div>
 		{/if}
 		{#each conversation as message (message.id)}
 			<div class="message {message.type}">
