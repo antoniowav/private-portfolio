@@ -95,4 +95,9 @@
 			gap: 1rem;
 		}
 	}
+	@media (max-width: 400px) {
+		footer {
+			padding: 0;
+		}
+	}
 </style>
