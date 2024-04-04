@@ -86,7 +86,7 @@
 				/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi,
 				'<a href="mailto:$1">$1</a>'
 			);
-			const pattern: RegExp = /【\d+†source】/g;
+			const pattern: RegExp = /【\d+(:\d+)?†source】/g;
 			responseText = responseText.replace(pattern, '');
 			conversation = [...conversation, { text: responseText, type: 'reply', id: Date.now() }];
 			await tick();
